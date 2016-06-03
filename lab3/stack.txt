@@ -1,0 +1,79 @@
+#include <iostream>
+#include <string>
+#include <cassert>
+
+using namespace std;
+
+template <typename T>
+class Stack
+{
+private:
+	T *stackPtr;                      
+	const int size;                   
+	int top;                         
+
+public:
+	Stack(int = 10);                  
+	~Stack();                         
+
+	inline void add(const T &);       
+	inline T del();                   
+	inline void get();                
+};
+
+template <typename T>
+Stack<T>::Stack(int maxSize) :
+size(maxSize)
+{
+	stackPtr = new T[size];
+	top = 0;
+}
+
+template <typename T>
+Stack<T>::~Stack()
+{
+	delete[] stackPtr;
+}
+
+template <typename T>
+inline void Stack<T>::add(const T &value)
+{
+	assert(top < size);
+	stackPtr[top++] = value;
+}
+
+template <typename T>
+inline T Stack<T>::del()
+{
+	assert(top > 0);
+	return stackPtr[--top];
+}
+
+template <typename T>
+inline void Stack<T>::get()
+{
+	int i = top - 1;
+	cout << stackPtr[i] << endl;
+}
+
+int main()
+{
+	Stack<int> a(5);
+	int i = 0;
+	int b;
+
+	while (i++ < 5)
+	{
+		cin >> b;
+		a.add(b);
+	}
+	cout << endl;
+	a.get();
+
+	cout << " delete element " << endl;
+	a.del();
+	a.get();
+
+	system("pause");
+	return 0;
+}
